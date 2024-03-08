@@ -1,6 +1,7 @@
 package com.ajs.abetteru.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -103,10 +104,15 @@ fun NavGraphBuilder.journalGraph(
         ) {
             val viewModel: AddEditViewModel = hiltViewModel()
             val color = viewModel.color
+            val question by viewModel.question
+            val answer by viewModel.answer
             AddEditScreen(
                 navController = navController,
-                onEvent = onEvent,
-                color = Color(color)
+                question = question,
+                answer = answer,
+                onThemeEvents = onEvent,
+                color = Color(color),
+                onEvent = viewModel::onEvent
             )
         }
     }

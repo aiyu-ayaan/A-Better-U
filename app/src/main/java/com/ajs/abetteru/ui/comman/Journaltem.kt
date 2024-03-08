@@ -24,9 +24,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ajs.abetteru.ui.theme.ABetterUTheme
 import com.ajs.abetteru.ui.theme.spacing
+import com.ajs.abetteru.utils.toBitmap
 import com.ajs.core.database.journal.JournalModel
-import com.ajs.core.database.journal.colorList
-import com.ajs.core.utils.toBitmap
+import com.ajs.core.database.journal.getColorList
 
 @Composable
 fun JournalItem(
@@ -143,7 +143,7 @@ private fun JournalItemPreview() {
     ABetterUTheme {
         JournalItem(
             model = JournalModel(
-                color = colorList[1],
+                color = getColorList()[1],
                 title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
                 description = "des",
             )

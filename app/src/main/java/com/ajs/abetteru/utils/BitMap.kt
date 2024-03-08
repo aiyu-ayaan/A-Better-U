@@ -1,4 +1,4 @@
-package com.ajs.core.utils
+package com.ajs.abetteru.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

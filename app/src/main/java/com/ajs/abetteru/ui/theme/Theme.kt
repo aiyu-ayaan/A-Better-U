@@ -6,7 +6,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -16,7 +15,7 @@ import androidx.core.view.WindowCompat
 
 
 internal val colorScheme = ColorScheme(
-    background = Color(0xfffff8f7),
+    background = Color(0xFFFFFBFF),
     error = Color(0xffba1a1a),
     errorContainer = Color(0xffffdad6),
     inverseOnSurface = Color(0xfff9eeef),
@@ -40,7 +39,7 @@ internal val colorScheme = ColorScheme(
     scrim = Color(0xff000000),
     secondary = Color(0xff72585c),
     secondaryContainer = Color(0xfffddadf),
-    surface = Color(0xfffff8f7),
+    surface = Color(0xFFFFFBFF),
     surfaceTint = Color(0xff924659),
     surfaceVariant = Color(0xffebe0e0),
     tertiary = Color(0xff76593a),
