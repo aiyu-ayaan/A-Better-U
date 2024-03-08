@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">A Better U</string>
+    <string name="Journal">Journal</string>
+    <string name="Affirmation">Affirmation</string>
+    <string name="VisionBoard">Vision Board</string>
 </resources>

@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -69,7 +70,10 @@ fun ABetterUTheme(
     ),
     content: @Composable () -> Unit,
 ) {
-    CompositionLocalProvider(LocalTheme provides systemTheme) {
+    CompositionLocalProvider(
+        LocalTheme provides systemTheme,
+        LocalSpacing provides Spacing()
+    ) {
         MaterialTheme(
             colorScheme = LocalTheme.current.colorScheme,
             typography = Typography,

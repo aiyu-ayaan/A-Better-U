@@ -1,4 +1,4 @@
-package com.ajs.abetteru
+package com.ajs.abetteru.ui.activities.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.ajs.abetteru.navigation.Navigation
 import com.ajs.abetteru.ui.theme.ABetterUTheme
 import com.ajs.abetteru.ui.theme.ThemeViewModel
 
@@ -22,13 +24,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             ABetterUTheme(
                 systemTheme = themeViewModel.systemTheme.value
             ) {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                ) { innerPadding ->
+                    Navigation(
+                        navController = navController,
+                        modifier = Modifier.padding(
+                            bottom = innerPadding.calculateBottomPadding()
+                        )
                     )
                 }
             }
