@@ -1,5 +1,6 @@
 package com.ajs.core.database.journal
 
+import androidx.annotation.Keep
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -22,6 +23,7 @@ val colorList = listOf(
     0xFFDDDEF1
 )
 
+@Keep
 @Entity(tableName = "journal")
 data class JournalModel(
     val title: String,

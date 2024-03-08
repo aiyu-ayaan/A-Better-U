@@ -18,7 +18,9 @@ import androidx.navigation.compose.rememberNavController
 import com.ajs.abetteru.navigation.ABetterUNavigationGraph
 import com.ajs.abetteru.ui.theme.ABetterUTheme
 import com.ajs.abetteru.ui.theme.ThemeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val themeViewModel: ThemeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {

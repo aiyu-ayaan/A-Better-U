@@ -2,12 +2,15 @@ package com.ajs.abetteru.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
 import com.ajs.abetteru.ui.screens.MainScreen
 import com.ajs.abetteru.ui.screens.affirmation.compose.AffirmationScreen
+import com.ajs.abetteru.ui.screens.journal.add_edit.AddEditViewModel
 import com.ajs.abetteru.ui.screens.journal.add_edit.compose.AddEditScreen
 import com.ajs.abetteru.ui.screens.journal.main.compose.JournalScreen
 import com.ajs.abetteru.ui.screens.vision_board.compose.VisionBoardScreen
@@ -98,9 +101,12 @@ fun NavGraphBuilder.journalGraph(
         animatedComposable(
             route = JournalScreenRoute.AddEditScreen.route
         ) {
+            val viewModel: AddEditViewModel = hiltViewModel()
+            val color = viewModel.color
             AddEditScreen(
                 navController = navController,
-                onEvent = onEvent
+                onEvent = onEvent,
+                color = Color(color)
             )
         }
     }
