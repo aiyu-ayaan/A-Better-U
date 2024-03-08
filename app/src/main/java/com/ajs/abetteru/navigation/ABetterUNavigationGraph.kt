@@ -3,7 +3,6 @@ package com.ajs.abetteru.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -103,7 +102,7 @@ fun NavGraphBuilder.journalGraph(
             route = JournalScreenRoute.AddEditScreen.route
         ) {
             val viewModel: AddEditViewModel = hiltViewModel()
-            val color = viewModel.color
+            val color by viewModel.color
             val question by viewModel.question
             val answer by viewModel.answer
             AddEditScreen(
@@ -111,7 +110,7 @@ fun NavGraphBuilder.journalGraph(
                 question = question,
                 answer = answer,
                 onThemeEvents = onEvent,
-                color = Color(color),
+                color = color,
                 onEvent = viewModel::onEvent
             )
         }
