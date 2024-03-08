@@ -1,1 +1,10 @@
 -dontwarn com.ajs.core.database.journal.JournalModel$Companion
+-dontwarn com.ajs.core.database.journal.JournalDao
+-dontwarn com.ajs.core.module.RoomModule_ProvidesDatabaseFactory
+-dontwarn com.ajs.core.module.RoomModule_ProvidesJournalDaoFactory
+-dontwarn com.ajs.core.use_cases.DeleteAllJournalUseCase
+-dontwarn com.ajs.core.use_cases.DeleteJournalByIdUseCase
+-dontwarn com.ajs.core.use_cases.GetAllJournalUseCase
+-dontwarn com.ajs.core.use_cases.GetJournalByIdUseCase
+-dontwarn com.ajs.core.use_cases.InsertJournalUseCase
+-dontwarn com.ajs.core.use_cases.JournalUseCases
