@@ -53,20 +53,24 @@ fun Toolbar(
 @Composable
 fun MainContainer(
     modifier: Modifier = Modifier,
-    content: @Composable (PaddingValues) -> Unit = { },
+    title: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
     onNavigationClick: (() -> Unit)? = null,
-    actions: @Composable RowScope.() -> Unit = {}
+    floatingActionButton: @Composable () -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {},
+    content: @Composable (PaddingValues) -> Unit = { }
 ) {
 
-    Scaffold(modifier = modifier, topBar = {
-        Toolbar(
-            title = "ABetterU",
-            scrollBehavior = scrollBehavior,
-            onNavigationClick = onNavigationClick,
-            actions = actions
-        )
-    }) {
+    Scaffold(
+        modifier = modifier, topBar = {
+            Toolbar(
+                title = title,
+                scrollBehavior = scrollBehavior,
+                onNavigationClick = onNavigationClick,
+                actions = actions
+            )
+        }, floatingActionButton = floatingActionButton
+    ) {
         content(it)
     }
 }

@@ -6,15 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.ajs.abetteru.navigation.Navigation
+import com.ajs.abetteru.navigation.ABetterUNavigationGraph
 import com.ajs.abetteru.ui.theme.ABetterUTheme
 import com.ajs.abetteru.ui.theme.ThemeViewModel
 
@@ -31,10 +32,13 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->
-                    Navigation(
+                    ABetterUNavigationGraph(
                         navController = navController,
-                        modifier = Modifier.padding(
-                            bottom = innerPadding.calculateBottomPadding()
+                        modifier = Modifier.windowInsetsPadding(
+                            WindowInsets(
+                                top = innerPadding.calculateTopPadding(),
+                                bottom = innerPadding.calculateBottomPadding(),
+                            )
                         )
                     )
                 }

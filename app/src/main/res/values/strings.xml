@@ -3,4 +3,6 @@
     <string name="Journal">Journal</string>
     <string name="Affirmation">Affirmation</string>
     <string name="VisionBoard">Vision Board</string>
+    <string name="AddEntry">Add Entry</string>
+    <string name="search_for_a_journal_entry">Search for a journal entry</string>
 </resources>

@@ -21,7 +21,6 @@ import androidx.compose.material.icons.outlined.Healing
 import androidx.compose.material.icons.outlined.Square
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -33,7 +32,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
@@ -49,11 +47,10 @@ internal data class NavBarModel(
 )
 
 @Composable
-fun BottomAppBarState(
+fun AppBar(
     modifier: Modifier = Modifier,
     backStackEntry: State<NavBackStackEntry?> = remember { mutableStateOf(null) },
     onClick: (route: String, isActive: Boolean) -> Unit = { _, _ -> },
-    onAddLinkClick: () -> Unit = {},
     isSelectionViewActive: Boolean = false,
 ) {
     val navigationItems = listOf(
@@ -77,7 +74,7 @@ fun BottomAppBarState(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
@@ -170,6 +167,6 @@ internal fun RowScope.NavBarItem(
 @Composable
 private fun BottomAppBarStatePreview() {
     ABetterUTheme {
-        BottomAppBarState()
+        AppBar()
     }
 }
