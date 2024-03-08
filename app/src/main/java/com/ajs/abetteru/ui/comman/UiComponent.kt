@@ -12,13 +12,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.ajs.abetteru.ui.theme.ABetterUTheme
 import com.ajs.abetteru.ui.theme.spacing
+import kotlinx.coroutines.android.awaitFrame
 
 @Composable
 fun TitleComponent(
@@ -47,10 +51,18 @@ fun EditText(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     readOnly: Boolean = false,
+    focusRequester: FocusRequester? = null,
     onValueChange: (String) -> Unit = {},
 ) {
+    LaunchedEffect(focusRequester) {
+        awaitFrame()
+        focusRequester?.requestFocus()
+    }
     OutlinedTextField(
-        modifier = modifier,
+        modifier = modifier.let {
+            if (focusRequester == null) it
+            else it.focusRequester(focusRequester)
+        },
         value = value,
         onValueChange = onValueChange,
         textStyle = textStyle,
@@ -63,7 +75,7 @@ fun EditText(
         ),
         keyboardActions = keyboardActions,
         keyboardOptions = keyboardOptions,
-        readOnly = readOnly
+        readOnly = readOnly,
     )
 }
 

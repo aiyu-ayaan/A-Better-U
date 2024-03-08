@@ -66,6 +66,7 @@ fun MainContainer(
     onNavigationClick: (() -> Unit)? = null,
     floatingActionButton: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
+    bottomBar: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit = { }
 ) {
 
@@ -78,7 +79,8 @@ fun MainContainer(
                 actions = actions,
                 color = appBarColor
             )
-        }, floatingActionButton = floatingActionButton
+        }, floatingActionButton = floatingActionButton,
+        bottomBar = bottomBar
     ) {
         content(it)
     }
