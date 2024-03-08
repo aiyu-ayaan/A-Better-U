@@ -45,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -95,7 +96,11 @@ fun AddEditScreen(
         },
         actions = {
             AnimatedVisibility(visible = !WindowInsets.isImeVisible) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    onEvent.invoke(AddEditEvents.Save(imageUri = selectedImageUri))
+                    navController.popBackStack()
+                }
+                ) {
                     Icon(
                         imageVector = Icons.Outlined.Edit, contentDescription = "Edit"
                     )
@@ -103,7 +108,11 @@ fun AddEditScreen(
             }
 
             AnimatedVisibility(visible = WindowInsets.isImeVisible) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    onEvent.invoke(AddEditEvents.Save(imageUri = selectedImageUri))
+                    navController.popBackStack()
+                }
+                ) {
                     Icon(
                         imageVector = Icons.Outlined.Done, contentDescription = "Save"
                     )
@@ -194,6 +203,7 @@ fun AddEditScreen(
                         Text(text = "Show All")
                     }
                 }
+                val context = LocalContext.current
                 AnimatedVisibility(
                     visible = selectedImageUri != null && !WindowInsets.isImeVisible,
                 ) {

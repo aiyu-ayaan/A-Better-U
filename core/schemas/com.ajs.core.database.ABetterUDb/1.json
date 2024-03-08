@@ -2,21 +2,21 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e063b9198840be150faf300f76ea4093",
+    "identityHash": "8403768b22584fe802873a6187d5b455",
     "entities": [
       {
         "tableName": "journal",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `color` INTEGER NOT NULL, `imageData` BLOB, `created` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`question` TEXT NOT NULL, `answer` TEXT NOT NULL, `color` INTEGER NOT NULL, `imageData` BLOB, `created` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
-            "fieldPath": "title",
-            "columnName": "title",
+            "fieldPath": "question",
+            "columnName": "question",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "description",
-            "columnName": "description",
+            "fieldPath": "answer",
+            "columnName": "answer",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -58,7 +58,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e063b9198840be150faf300f76ea4093')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8403768b22584fe802873a6187d5b455')"
     ]
   }
 }

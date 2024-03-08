@@ -33,15 +33,16 @@ import com.ajs.abetteru.navigation.JournalScreenRoute
 import com.ajs.abetteru.ui.comman.JournalItem
 import com.ajs.abetteru.ui.comman.MainContainer
 import com.ajs.abetteru.ui.comman.TitleComponent
-import com.ajs.abetteru.ui.comman.journalModel
 import com.ajs.abetteru.ui.theme.ABetterUTheme
 import com.ajs.abetteru.ui.theme.ThemeEvents
 import com.ajs.abetteru.ui.theme.spacing
+import com.ajs.core.database.journal.JournalModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JournalScreen(
     modifier: Modifier = Modifier,
+    journals: List<JournalModel> = emptyList(),
     navController: NavController = rememberNavController(),
     onEvent: (ThemeEvents) -> Unit = {},
 ) {
@@ -88,11 +89,12 @@ fun JournalScreen(
             item {
                 SearchCard()
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
-                TitleComponent(
-                    title = stringResource(id = R.string.RecentEntries)
-                )
+                if (journals.isNotEmpty())
+                    TitleComponent(
+                        title = stringResource(id = R.string.RecentEntries)
+                    )
             }
-            items(journalModel) {
+            items(journals) {
                 JournalItem(
                     model = it
                 )

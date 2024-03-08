@@ -56,7 +56,7 @@ fun JournalItem(
                     )
             ) {
                 Text(
-                    text = model.title,
+                    text = model.question,
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -68,7 +68,7 @@ fun JournalItem(
                     )
                 )
                 Text(
-                    text = model.description,
+                    text = model.answer,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
@@ -86,7 +86,8 @@ fun JournalItem(
                         .weight(.2f)
                         .aspectRatio(
                             1f
-                        ),
+                        )
+                    ,
                     bitmap = model.imageData!!.toBitmap().asImageBitmap(),
                     contentDescription = "Image"
                 )
@@ -94,58 +95,15 @@ fun JournalItem(
     }
 }
 
-val journalModel = listOf(
-    JournalModel(
-        title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-        description = "Which habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this year",
-    ),
-    JournalModel(
-        title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-        description = "Which habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this year",
-    ),
-    JournalModel(
-        title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-        description = "Which habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this year",
-    ),
-    JournalModel(
-        title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-        description = "Which habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this year",
-    ),
-    JournalModel(
-        title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-        description = "Which habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this year",
-    ),
-    JournalModel(
-        title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-        description = "Which habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this year",
-    ),
-    JournalModel(
-        title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-        description = "Which habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this year",
-    ),
-    JournalModel(
-        title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-        description = "Which habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this year",
-    ),
-    JournalModel(
-        title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-        description = "Which habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this year",
-    ),
-    JournalModel(
-        title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-        description = "Which habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this yearWhich habits do you want to develop this year",
-    ),
-)
-
 @Preview(showBackground = true)
 @Composable
 private fun JournalItemPreview() {
     ABetterUTheme {
         JournalItem(
             model = JournalModel(
-                color = getColorList()[1],
-                title = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
-                description = "des",
+                color = getColorList()[1].toInt(),
+                question = "Which habits do you want to develop this year Which habits do you want to develop this year ?",
+                answer = "des",
             )
         )
     }

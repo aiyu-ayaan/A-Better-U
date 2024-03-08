@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Keep
-fun getColorList(): List<Long> {
+fun getColorList(): List<Int> {
     return listOf(
         0xFFFCF0F0,
         0xFFFDEDE0,
@@ -23,16 +23,16 @@ fun getColorList(): List<Long> {
         0xFFFDD1FA,
         0xFFF6E6F5,
         0xFFDDDEF1
-    )
+    ).map { it.toInt() }
 }
 
 
 @Keep
 @Entity(tableName = "journal")
 data class JournalModel(
-    val title: String,
-    val description: String,
-    val color: Long = getColorList().random(),
+    val question: String,
+    val answer: String,
+    val color: Int,
     val imageData: ByteArray? = null,
     val created: Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = true)
@@ -44,8 +44,8 @@ data class JournalModel(
 
         other as JournalModel
 
-        if (title != other.title) return false
-        if (description != other.description) return false
+        if (question != other.question) return false
+        if (answer != other.answer) return false
         if (color != other.color) return false
         if (imageData != null) {
             if (other.imageData == null) return false
@@ -58,8 +58,8 @@ data class JournalModel(
     }
 
     override fun hashCode(): Int {
-        var result = title.hashCode()
-        result = 31 * result + description.hashCode()
+        var result = question.hashCode()
+        result = 31 * result + answer.hashCode()
         result = 31 * result + color.hashCode()
         result = 31 * result + (imageData?.contentHashCode() ?: 0)
         result = 31 * result + created.hashCode()

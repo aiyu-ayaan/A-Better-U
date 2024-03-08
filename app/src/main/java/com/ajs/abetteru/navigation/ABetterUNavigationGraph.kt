@@ -1,6 +1,7 @@
 package com.ajs.abetteru.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -12,6 +13,7 @@ import com.ajs.abetteru.ui.screens.MainScreen
 import com.ajs.abetteru.ui.screens.affirmation.compose.AffirmationScreen
 import com.ajs.abetteru.ui.screens.journal.add_edit.AddEditViewModel
 import com.ajs.abetteru.ui.screens.journal.add_edit.compose.AddEditScreen
+import com.ajs.abetteru.ui.screens.journal.main.JournalViewModel
 import com.ajs.abetteru.ui.screens.journal.main.compose.JournalScreen
 import com.ajs.abetteru.ui.screens.vision_board.compose.VisionBoardScreen
 import com.ajs.abetteru.ui.theme.ThemeEvents
@@ -93,8 +95,11 @@ fun NavGraphBuilder.journalGraph(
         fadeThroughComposable(
             route = JournalScreenRoute.JournalScreen.route
         ) {
+            val viewModel: JournalViewModel = hiltViewModel()
+            val journals by viewModel.journals.collectAsState(initial = emptyList())
             JournalScreen(
                 navController = navController,
+                journals = journals,
                 onEvent = onEvent
             )
         }
