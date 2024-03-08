@@ -5,25 +5,28 @@ import androidx.room.PrimaryKey
 
 
 val colorList = listOf(
-    0xFF4285F4,
-    0xFFEA4335,
-    0xFFFBBC05,
-    0xFF34A853,
-    0xFF4285F4,
-    0xFFEA4335,
-    0xFFFBBC05,
-    0xFF34A853,
-    0xFF4285F4,
-    0xFFEA4335,
-    0xFFFBBC05,
-    0xFF34A853,
+    0xFFFCF0F0,
+    0xFFFDEDE0,
+    0xFFFADED5,
+    0xFFFCE1CF,
+    0xFFFBFDE1,
+    0xFFEFFED9,
+    0xFFF8FFD1,
+    0xFFEEFEC4,
+    0xFFDBFEF5,
+    0xFFCEF3DB,
+    0xFFBFE8CC,
+    0xFFFDBAD8,
+    0xFFFDD1FA,
+    0xFFF6E6F5,
+    0xFFDDDEF1
 )
 
 @Entity(tableName = "journal")
 data class JournalModel(
     val title: String,
     val description: String,
-    val color: Long,
+    val color: Long = colorList.random(),
     val imageData: ByteArray? = null,
     val created: Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = true)

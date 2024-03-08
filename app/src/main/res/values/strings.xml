@@ -5,4 +5,5 @@
     <string name="VisionBoard">Vision Board</string>
     <string name="AddEntry">Add Entry</string>
     <string name="search_for_a_journal_entry">Search for a journal entry</string>
+    <string name="RecentEntries">Recent Entries</string>
 </resources>

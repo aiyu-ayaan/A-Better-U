@@ -1,9 +1,18 @@
 package com.ajs.abetteru.ui.screens.journal.compose
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,7 +27,10 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.ajs.abetteru.R
+import com.ajs.abetteru.ui.comman.JournalItem
 import com.ajs.abetteru.ui.comman.MainContainer
+import com.ajs.abetteru.ui.comman.TitleComponent
+import com.ajs.abetteru.ui.comman.journalModel
 import com.ajs.abetteru.ui.theme.ABetterUTheme
 import com.ajs.abetteru.ui.theme.spacing
 
@@ -28,17 +40,29 @@ fun JournalScreen(
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val lazyColumnScrollState = rememberLazyListState()
     MainContainer(title = stringResource(id = R.string.Journal),
         modifier = modifier,
         scrollBehavior = scrollBehavior,
         floatingActionButton = {
-            ExtendedFloatingActionButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    imageVector = Icons.Outlined.Edit,
-                    contentDescription = null,
-                    modifier = Modifier.padding(end = MaterialTheme.spacing.small)
-                )
-                Text(text = stringResource(id = R.string.AddEntry))
+            AnimatedVisibility(
+                visible = !lazyColumnScrollState.isScrollInProgress,
+                enter = slideInHorizontally {
+                    it.div(2)
+
+                } + fadeIn(),
+                exit = slideOutHorizontally {
+                    it.div(2)
+                } + fadeOut()
+            ) {
+                ExtendedFloatingActionButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Edit,
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = MaterialTheme.spacing.small)
+                    )
+                    Text(text = stringResource(id = R.string.AddEntry))
+                }
             }
         }) { paddingValues ->
         LazyColumn(
@@ -47,10 +71,20 @@ fun JournalScreen(
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
                 .consumeWindowInsets(paddingValues)
                 .padding(horizontal = MaterialTheme.spacing.medium),
-            contentPadding = PaddingValues(bottom = MaterialTheme.spacing.bottomPadding)
+            contentPadding = PaddingValues(bottom = MaterialTheme.spacing.bottomPadding),
+            state = lazyColumnScrollState
         ) {
             item {
                 SearchCard()
+                Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
+                TitleComponent(
+                    title = stringResource(id = R.string.RecentEntries)
+                )
+            }
+            items(journalModel) {
+                JournalItem(
+                    model = it
+                )
             }
         }
     }
