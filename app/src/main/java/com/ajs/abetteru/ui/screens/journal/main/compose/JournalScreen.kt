@@ -35,6 +35,7 @@ import com.ajs.abetteru.ui.comman.MainContainer
 import com.ajs.abetteru.ui.comman.TitleComponent
 import com.ajs.abetteru.ui.comman.journalModel
 import com.ajs.abetteru.ui.theme.ABetterUTheme
+import com.ajs.abetteru.ui.theme.ThemeEvents
 import com.ajs.abetteru.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,9 +43,11 @@ import com.ajs.abetteru.ui.theme.spacing
 fun JournalScreen(
     modifier: Modifier = Modifier,
     navController: NavController = rememberNavController(),
+    onEvent: (ThemeEvents) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val lazyColumnScrollState = rememberLazyListState()
+    onEvent.invoke(ThemeEvents.SetDefaultColorScheme)
     MainContainer(title = stringResource(id = R.string.Journal),
         modifier = modifier,
         scrollBehavior = scrollBehavior,

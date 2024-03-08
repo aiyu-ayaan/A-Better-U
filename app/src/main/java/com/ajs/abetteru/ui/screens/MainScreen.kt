@@ -27,12 +27,14 @@ import com.ajs.abetteru.navigation.JournalScreenRoute
 import com.ajs.abetteru.navigation.VisionBoardScreenRoute
 import com.ajs.abetteru.ui.comman.AppBar
 import com.ajs.abetteru.ui.theme.ABetterUTheme
+import com.ajs.abetteru.ui.theme.ThemeEvents
 
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController = rememberNavController()
+    navHostController: NavHostController = rememberNavController(),
+    onEvent: (ThemeEvents) -> Unit = {}
 ) {
     val visibleScreens = listOf(
         JournalScreenRoute.JournalScreen.route,
@@ -67,6 +69,7 @@ fun MainScreen(
         }
     ) {
         AppNavigation(
+            onEvent = onEvent,
             navHostController = navHostController,
             modifier = modifier.padding(
                 start = it.calculateStartPadding(layoutDirection = LayoutDirection.Ltr),

@@ -34,6 +34,13 @@ class ThemeViewModel @Inject constructor() : ViewModel() {
                     navBarColor = event.color
                 )
             }
+
+            is ThemeEvents.SetDefaultColorScheme -> {
+                _systemTheme.value = _systemTheme.value.copy(
+                    colorScheme = colorScheme,
+                    navBarColor = colorScheme.surface
+                )
+            }
         }
     }
 }
@@ -41,4 +48,6 @@ class ThemeViewModel @Inject constructor() : ViewModel() {
 sealed interface ThemeEvents {
     data class OnNavBarColorChanged(val color: Color) : ThemeEvents
     data class OnColorSchemeChanged(val colorScheme: ColorScheme) : ThemeEvents
+
+    data object SetDefaultColorScheme : ThemeEvents
 }

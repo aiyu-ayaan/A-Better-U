@@ -11,6 +11,7 @@ import com.ajs.abetteru.ui.screens.affirmation.compose.AffirmationScreen
 import com.ajs.abetteru.ui.screens.journal.add_edit.compose.AddEditScreen
 import com.ajs.abetteru.ui.screens.journal.main.compose.JournalScreen
 import com.ajs.abetteru.ui.screens.vision_board.compose.VisionBoardScreen
+import com.ajs.abetteru.ui.theme.ThemeEvents
 import com.ajs.abetteru.utils.animatedComposable
 import com.ajs.abetteru.utils.fadeThroughComposable
 
@@ -28,7 +29,8 @@ sealed class ABetterUNavigation(val route: String) {
 @Composable
 fun ABetterUNavigationGraph(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    onEvent: (ThemeEvents) -> Unit
 ) {
     NavHost(
         modifier = modifier,
@@ -38,7 +40,7 @@ fun ABetterUNavigationGraph(
         animatedComposable(
             route = ABetterUNavigation.MainScreens.route
         ) {
-            MainScreen()
+            MainScreen(onEvent = onEvent)
         }
     }
 }
@@ -54,6 +56,7 @@ sealed class Screen(val route: String) {
 fun AppNavigation(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
+    onEvent: (ThemeEvents) -> Unit = {},
     startDestination: String = Screen.Journal.route
 ) {
     NavHost(
@@ -61,7 +64,10 @@ fun AppNavigation(
         navController = navHostController,
         startDestination = startDestination
     ) {
-        journalGraph(navHostController)
+        journalGraph(
+            navController = navHostController,
+            onEvent = onEvent
+        )
         affirmationGraph(navHostController)
         visionBoardGraph(navHostController)
     }
@@ -74,7 +80,8 @@ sealed class JournalScreenRoute(val route: String) {
 
 
 fun NavGraphBuilder.journalGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    onEvent: (ThemeEvents) -> Unit = {},
 ) {
     navigation(
         startDestination = JournalScreenRoute.JournalScreen.route,
@@ -84,14 +91,16 @@ fun NavGraphBuilder.journalGraph(
             route = JournalScreenRoute.JournalScreen.route
         ) {
             JournalScreen(
-                navController = navController
+                navController = navController,
+                onEvent = onEvent
             )
         }
         animatedComposable(
             route = JournalScreenRoute.AddEditScreen.route
         ) {
             AddEditScreen(
-                navController = navController
+                navController = navController,
+                onEvent = onEvent
             )
         }
     }
