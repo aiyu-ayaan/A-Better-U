@@ -1,4 +1,4 @@
-package com.ajs.abetteru.ui.screens.journal.compose
+package com.ajs.abetteru.ui.screens.journal.main.compose
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -26,7 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.ajs.abetteru.R
+import com.ajs.abetteru.navigation.JournalScreenRoute
 import com.ajs.abetteru.ui.comman.JournalItem
 import com.ajs.abetteru.ui.comman.MainContainer
 import com.ajs.abetteru.ui.comman.TitleComponent
@@ -37,7 +40,8 @@ import com.ajs.abetteru.ui.theme.spacing
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JournalScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController = rememberNavController(),
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val lazyColumnScrollState = rememberLazyListState()
@@ -55,7 +59,11 @@ fun JournalScreen(
                     it.div(2)
                 } + fadeOut()
             ) {
-                ExtendedFloatingActionButton(onClick = { /*TODO*/ }) {
+                ExtendedFloatingActionButton(onClick = {
+                    navController.navigate(
+                        JournalScreenRoute.AddEditScreen.route
+                    )
+                }) {
                     Icon(
                         imageVector = Icons.Outlined.Edit,
                         contentDescription = null,

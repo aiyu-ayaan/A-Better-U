@@ -36,6 +36,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import com.ajs.abetteru.R
+import com.ajs.abetteru.navigation.AffirmationScreenRoute
+import com.ajs.abetteru.navigation.JournalScreenRoute
+import com.ajs.abetteru.navigation.Screen
+import com.ajs.abetteru.navigation.VisionBoardScreenRoute
 import com.ajs.abetteru.ui.theme.ABetterUTheme
 
 internal data class NavBarModel(
@@ -43,6 +47,7 @@ internal data class NavBarModel(
     val selectedIcon: ImageVector,
     val unSelectedIcon: ImageVector? = null,
     val route: String = "",
+    val destinationName: String = "",
     val isVisible: Boolean = true
 )
 
@@ -50,25 +55,28 @@ internal data class NavBarModel(
 fun AppBar(
     modifier: Modifier = Modifier,
     backStackEntry: State<NavBackStackEntry?> = remember { mutableStateOf(null) },
-    onClick: (route: String, isActive: Boolean) -> Unit = { _, _ -> },
+    onClick: (route: String) -> Unit = { },
     isSelectionViewActive: Boolean = false,
 ) {
     val navigationItems = listOf(
         NavBarModel(
             title = R.string.Journal,
             selectedIcon = Icons.AutoMirrored.Rounded.MenuBook,
-//            route = NavigationRoutes.HomeScreen.route,
-            isVisible = !isSelectionViewActive
+            route = Screen.Journal.route,
+            isVisible = !isSelectionViewActive,
+            destinationName = JournalScreenRoute.JournalScreen.route
         ),
         NavBarModel(
             title = R.string.Affirmation,
             selectedIcon = Icons.Outlined.Healing,
-//            route = NavigationRoutes.ArchiveOrDeleteScreen.route + "?request=${ScreenType.ARCHIVE.value}"
+            route = Screen.Affirmation.route,
+            destinationName = AffirmationScreenRoute.AffirmationScreen.route
         ),
         NavBarModel(
             title = R.string.VisionBoard,
             selectedIcon = Icons.Outlined.Square,
-//            route = NavigationRoutes.ArchiveOrDeleteScreen.route + "?request=${ScreenType.DELETE.value}"
+            route = Screen.VisionBoard.route,
+            destinationName = VisionBoardScreenRoute.VisionBoardScreen.route
         ),
     )
     Row(
@@ -90,12 +98,12 @@ fun AppBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             navigationItems.forEach { item ->
-                val selected = item.route == backStackEntry.value?.destination?.route
+                val selected = item.destinationName == backStackEntry.value?.destination?.route
                 NavBarItem(
                     navItem = item,
                     isSelected = selected,
                     onClick = {
-                        onClick(it, isSelectionViewActive)
+                        onClick(it)
                     },
                 )
             }

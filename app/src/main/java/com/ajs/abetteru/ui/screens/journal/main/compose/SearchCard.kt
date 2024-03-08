@@ -1,4 +1,4 @@
-package com.ajs.abetteru.ui.screens.journal.compose
+package com.ajs.abetteru.ui.screens.journal.main.compose
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

@@ -36,7 +36,6 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         modifier = Modifier.windowInsetsPadding(
                             WindowInsets(
-                                top = innerPadding.calculateTopPadding(),
                                 bottom = innerPadding.calculateBottomPadding(),
                             )
                         )

@@ -1,4 +1,4 @@
-package com.ajs.abetteru.ui.screens.journal
+package com.ajs.abetteru.ui.screens.journal.main
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -7,12 +7,15 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.ajs.abetteru.ui.theme.ABetterUTheme
 
@@ -23,7 +26,8 @@ fun Toolbar(
     title: String = "",
     onNavigationClick: (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
-    scrollBehavior: TopAppBarScrollBehavior? = null
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    color: Color = MaterialTheme.colorScheme.background
 ) {
     val icon: @Composable () -> Unit = if (onNavigationClick != null) {
         {
@@ -44,7 +48,10 @@ fun Toolbar(
         modifier = modifier,
         actions = actions,
         scrollBehavior = scrollBehavior,
-        navigationIcon = icon
+        navigationIcon = icon,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = color
+        )
     )
 }
 
@@ -54,6 +61,7 @@ fun Toolbar(
 fun MainContainer(
     modifier: Modifier = Modifier,
     title: String = "",
+    appBarColor: Color = MaterialTheme.colorScheme.background,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     onNavigationClick: (() -> Unit)? = null,
     floatingActionButton: @Composable () -> Unit = {},
@@ -67,7 +75,8 @@ fun MainContainer(
                 title = title,
                 scrollBehavior = scrollBehavior,
                 onNavigationClick = onNavigationClick,
-                actions = actions
+                actions = actions,
+                color = appBarColor
             )
         }, floatingActionButton = floatingActionButton
     ) {
