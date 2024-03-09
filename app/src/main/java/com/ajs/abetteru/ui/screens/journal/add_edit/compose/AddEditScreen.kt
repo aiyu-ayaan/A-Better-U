@@ -1,6 +1,6 @@
 package com.ajs.abetteru.ui.screens.journal.add_edit.compose
 
-import android.net.Uri
+import android.graphics.Bitmap
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -38,14 +38,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -69,87 +68,87 @@ fun AddEditScreen(
     modifier: Modifier = Modifier,
     question: String = "What's on your mind?",
     answer: String = "",
+    bitmap: Bitmap? = null,
     onThemeEvents: (ThemeEvents) -> Unit = {},
     color: Color = Color.Unspecified,
+    isNewEntry: Boolean = true,
     navController: NavController = rememberNavController(),
     onEvent: (AddEditEvents) -> Unit = {}
 ) {
     val questionBottomSheet = rememberModalBottomSheetState()
     val colorBottomSheet = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
+
     var showQuestionBottomSheet by remember { mutableStateOf(false) }
     var showColorBottomSheet by remember { mutableStateOf(false) }
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     val singleImagePickerLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
             onResult = { uri ->
-                selectedImageUri = uri
+                onEvent.invoke(AddEditEvents.OnImagePicked(uri))
             })
     onThemeEvents.invoke(ThemeEvents.OnNavBarColorChanged(color))
     val animatedColor by animateColorAsState(targetValue = color, label = "color")
-    MainContainer(
-        modifier = modifier
-            .imePadding(),
-        appBarColor = color,
-        onNavigationClick = {
-            navController.popBackStack()
-        },
-        actions = {
-            AnimatedVisibility(visible = !WindowInsets.isImeVisible) {
-                IconButton(onClick = {
-                    onEvent.invoke(AddEditEvents.Save(imageUri = selectedImageUri))
-                    navController.popBackStack()
-                }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Edit, contentDescription = "Edit"
-                    )
-                }
+    MainContainer(modifier = modifier.imePadding(), appBarColor = color, onNavigationClick = {
+        navController.popBackStack()
+    }, actions = {
+        AnimatedVisibility(visible = !WindowInsets.isImeVisible) {
+            IconButton(onClick = {
+                onEvent.invoke(AddEditEvents.Save)
+                navController.popBackStack()
+            }) {
+                Icon(
+                    imageVector = Icons.Outlined.Edit, contentDescription = "Edit"
+                )
             }
+        }
 
-            AnimatedVisibility(visible = WindowInsets.isImeVisible) {
-                IconButton(onClick = {
-                    onEvent.invoke(AddEditEvents.Save(imageUri = selectedImageUri))
-                    navController.popBackStack()
-                }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Done, contentDescription = "Save"
-                    )
-                }
-            }
-            IconButton(onClick = { /*TODO*/ }) {
+        AnimatedVisibility(visible = WindowInsets.isImeVisible) {
+            IconButton(onClick = {
+                onEvent.invoke(AddEditEvents.Save)
+                navController.popBackStack()
+            }) {
                 Icon(
-                    imageVector = Icons.Outlined.Share, contentDescription = "Edit"
+                    imageVector = Icons.Outlined.Done, contentDescription = "Save"
                 )
             }
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(
-                    imageVector = Icons.Outlined.Delete, contentDescription = "Edit"
-                )
-            }
-        },
-        bottomBar = {
-            BottomMenu(
-                modifier = Modifier.drawBehind {
-                    drawRect(animatedColor)
-                },
-                isKeyboardVisible = WindowInsets.isImeVisible,
-                backGroundColor = color,
-                onColorClick = {
-                    showColorBottomSheet = true
-                },
-                onImageClick = {
-                    singleImagePickerLauncher.launch(
-                        PickVisualMediaRequest(
-                            ActivityResultContracts.PickVisualMedia.ImageOnly
-                        )
-                    )
-                },
-//                isKeyboardActive = WindowInsets.isImeVisible
+        }
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                imageVector = Icons.Outlined.Share, contentDescription = "Edit"
             )
         }
-    ) {
+        if (!isNewEntry) {
+            IconButton(onClick = {
+                onEvent.invoke(
+                    AddEditEvents.OnDelete
+                )
+                navController.popBackStack()
+            }) {
+                Icon(
+                    imageVector = Icons.Outlined.Delete, contentDescription = "Delete"
+                )
+            }
+        }
+    }, bottomBar = {
+        BottomMenu(modifier = Modifier.drawBehind {
+            drawRect(animatedColor)
+        },
+            isKeyboardVisible = WindowInsets.isImeVisible,
+            backGroundColor = color,
+            onColorClick = {
+                showColorBottomSheet = true
+            },
+            onImageClick = {
+                singleImagePickerLauncher.launch(
+                    PickVisualMediaRequest(
+                        ActivityResultContracts.PickVisualMedia.ImageOnly
+                    )
+                )
+            },
+            onKeyboardHide = {
+                focusManager.clearFocus()
+            })
+    }) {
         Box(modifier = Modifier
             .fillMaxSize()
             .padding(it)
@@ -203,16 +202,14 @@ fun AddEditScreen(
                         Text(text = "Show All")
                     }
                 }
-                val context = LocalContext.current
                 AnimatedVisibility(
-                    visible = selectedImageUri != null && !WindowInsets.isImeVisible,
+                    visible = !WindowInsets.isImeVisible && bitmap != null,
                 ) {
-                    ImageItem(
-                        model = selectedImageUri,
-                    )
+                    ImageItem(model = bitmap, onDelete = {
+                        onEvent.invoke(AddEditEvents.OnImagePicked(null))
+                    })
                 }
-                EditText(
-                    label = "Answer",
+                EditText(label = "Answer",
                     modifier = Modifier
                         .fillMaxWidth()
                         .animateContentSize(),
@@ -221,11 +218,10 @@ fun AddEditScreen(
                         onEvent.invoke(AddEditEvents.OnAnswerChanged(typedText))
                     },
                     textStyle = MaterialTheme.typography.bodyLarge,
-                    focusRequester = remember {
+                    focusRequester = if (isNewEntry) remember {
                         FocusRequester()
                     }
-
-                )
+                    else null)
             }
         }
 

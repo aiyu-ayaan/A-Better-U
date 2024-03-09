@@ -7,8 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
+import androidx.navigation.navArgument
 import com.ajs.abetteru.ui.screens.MainScreen
 import com.ajs.abetteru.ui.screens.affirmation.compose.AffirmationScreen
 import com.ajs.abetteru.ui.screens.journal.add_edit.AddEditViewModel
@@ -104,18 +106,28 @@ fun NavGraphBuilder.journalGraph(
             )
         }
         animatedComposable(
-            route = JournalScreenRoute.AddEditScreen.route
+            route = JournalScreenRoute.AddEditScreen.route + "?modelId={modelId}",
+            arguments = listOf(
+                navArgument("modelId") {
+                    defaultValue = -1
+                    type = NavType.IntType
+                }
+            )
         ) {
             val viewModel: AddEditViewModel = hiltViewModel()
             val color by viewModel.color
             val question by viewModel.question
             val answer by viewModel.answer
+            val bitmap by viewModel.bitmap
+            val isNewEntry = viewModel.id == -1
             AddEditScreen(
                 navController = navController,
                 question = question,
+                bitmap = bitmap,
                 answer = answer,
                 onThemeEvents = onEvent,
                 color = color,
+                isNewEntry = isNewEntry,
                 onEvent = viewModel::onEvent
             )
         }

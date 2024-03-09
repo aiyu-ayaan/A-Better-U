@@ -1,6 +1,7 @@
 package com.ajs.abetteru.ui.comman
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,66 +33,72 @@ import com.ajs.core.database.journal.getColorList
 @Composable
 fun JournalItem(
     modifier: Modifier = Modifier,
-    model: JournalModel
+    model: JournalModel,
+    onClick: () -> Unit = {}
 ) {
-    Card(
+    Surface(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = MaterialTheme.spacing.small),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(model.color)
-        )
+            .clickable { onClick.invoke() }
     ) {
-        Row(
-            modifier = Modifier
-                .padding(
-                    MaterialTheme.spacing.large
-                ),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = MaterialTheme.spacing.small),
+            colors = CardDefaults.cardColors(
+                containerColor = Color(model.color)
+            )
         ) {
-            Column(
+            Row(
                 modifier = Modifier
-                    .weight(
-                        if (model.imageData != null) .8f else 1f
-                    )
+                    .padding(
+                        MaterialTheme.spacing.large
+                    ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = model.question,
-                    style = MaterialTheme.typography.titleMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Spacer(
-                    modifier =
-                    Modifier.padding(
-                        vertical = MaterialTheme.spacing.small
-                    )
-                )
-                Text(
-                    text = model.answer,
-                    style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-            if (model.imageData != null)
-                Image(
+                Column(
                     modifier = Modifier
-                        .heightIn(
-                            min = 40.dp,
+                        .weight(
+                            if (model.imageData != null) .8f else 1f
                         )
-                        .widthIn(
-                            max = 40.dp
+                ) {
+                    Text(
+                        text = model.question,
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(
+                        modifier =
+                        Modifier.padding(
+                            vertical = MaterialTheme.spacing.small
                         )
-                        .weight(.2f)
-                        .aspectRatio(
-                            1f
-                        )
-                    ,
-                    bitmap = model.imageData!!.toBitmap().asImageBitmap(),
-                    contentDescription = "Image"
-                )
+                    )
+                    Text(
+                        text = model.answer,
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+                if (model.imageData != null)
+                    Image(
+                        modifier = Modifier
+                            .heightIn(
+                                min = 40.dp,
+                            )
+                            .widthIn(
+                                max = 40.dp
+                            )
+                            .weight(.2f)
+                            .aspectRatio(
+                                1f
+                            ),
+                        bitmap = model.imageData!!.toBitmap().asImageBitmap(),
+                        contentDescription = "Image"
+                    )
+            }
         }
     }
 }

@@ -7,5 +7,8 @@ sealed interface AddEditEvents {
     data object OnQuestionChanged : AddEditEvents
     data class OnColorChanged(val color: Color) : AddEditEvents
     data class OnAnswerChanged(val answer: String) : AddEditEvents
-    data class Save(val imageUri: Uri?) : AddEditEvents
+    data object Save : AddEditEvents
+    data class OnImagePicked(val imageUri: Uri?) : AddEditEvents
+
+    data object OnDelete : AddEditEvents
 }

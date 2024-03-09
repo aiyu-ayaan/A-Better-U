@@ -97,7 +97,11 @@ fun JournalScreen(
             items(journals) {
                 JournalItem(
                     model = it
-                )
+                ){
+                    navController.navigate(
+                        JournalScreenRoute.AddEditScreen.route + "?modelId=${it.id}"
+                    )
+                }
             }
         }
     }
